@@ -58,3 +58,34 @@ ridge_reg.fit(X_train, y_train)
 y_pred = ridge_reg.predict(X_test)
 mse = mean_squared_error(y_test, y_pred)
 print(f'Mean Squared Error: {mse}')
+```
+
+
+A lógica por trás do ajuste do parâmetro de regularização (\(\lambda\) ou alpha no scikit-learn) na Regressão Ridge está relacionada ao equilíbrio entre o ajuste do modelo aos dados de treinamento e a complexidade do modelo.
+
+## Lógica do Parâmetro de Regularização (\(\lambda\))
+
+### 1. Termo de Erro vs. Termo de Penalização
+Na Regressão Ridge, a função de custo a ser minimizada é:
+
+\[ J(\beta) = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^{p} \beta_j^2 \]
+
+- **Termo de Erro**: \(\sum_{i=1}^{n} (y_i - \hat{y}_i)^2\) representa a soma dos erros quadrados. Este termo mede o ajuste do modelo aos dados de treinamento.
+- **Termo de Penalização**: \(\lambda \sum_{j=1}^{p} \beta_j^2\) adiciona uma penalidade proporcional ao quadrado dos coeficientes do modelo. Este termo controla a complexidade do modelo.
+
+### 2. Interpretação de \(\lambda\)
+- **\(\lambda = 0\)**: Sem regularização. O modelo se reduz à regressão linear tradicional, minimizando apenas o erro de treinamento.
+- **\(\lambda > 0\)**: Introduz regularização. O valor de \(\lambda\) controla a força da penalização:
+  - **Valores pequenos de \(\lambda\)**: O modelo ainda se ajusta bem aos dados de treinamento, mas com alguma penalização para evitar overfitting.
+  - **Valores grandes de \(\lambda\)**: A penalização é forte, forçando os coeficientes \(\beta\) a serem menores, o que pode resultar em underfitting, pois o modelo se torna mais simples e pode não capturar bem os padrões dos dados.
+
+## Ajuste do Parâmetro de Regularização
+
+### Aumentar \(\lambda\)
+- **Quando**: Se o modelo está overfitting (ou seja, tem uma alta variância, ajustando-se muito aos dados de treinamento e tendo um desempenho ruim em novos dados).
+- **Efeito**: Aumentar \(\lambda\) vai penalizar mais os coeficientes, reduzindo sua magnitude e tornando o modelo mais simples. Isso pode reduzir o overfitting, mas há o risco de underfitting se \(\lambda\) for muito grande.
+
+### Diminuir \(\lambda\)
+- **Quando**: Se o modelo está underfitting (ou seja, tem um alto viés, não capturando suficientemente os padrões nos dados de treinamento e tendo um desempenho ruim tanto em dados de treinamento quanto em novos dados).
+- **Efeito**: Diminuir \(\lambda\) reduz a penalização sobre os coeficientes, permitindo que o modelo se ajuste mais aos dados de treinamento. Isso pode melhorar o ajuste, mas há o risco de overfitting se \(\lambda\) for muito pequeno.
+
