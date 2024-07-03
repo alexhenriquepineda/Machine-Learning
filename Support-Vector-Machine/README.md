@@ -72,3 +72,33 @@ Onde:
 - **Sobreposição das Classes**: Pode ser menos eficaz quando as classes são bastante sobrepostas.
 
 Em resumo, o SVM é uma ferramenta poderosa no arsenal de algoritmos de aprendizado de máquina, oferecendo um bom equilíbrio entre complexidade e capacidade de generalização, especialmente em problemas de classificação complexos.
+
+```python
+# Importar bibliotecas necessárias
+import numpy as np
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+
+# Carregar conjunto de dados Iris
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
+
+# Dividir o conjunto de dados em treinamento e teste
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Criar o classificador SVM
+svm_model = SVC(kernel='linear')
+
+# Treinar o modelo
+svm_model.fit(X_train, y_train)
+
+# Fazer previsões no conjunto de teste
+y_pred = svm_model.predict(X_test)
+
+# Avaliar a precisão do modelo
+accuracy = accuracy_score(y_test, y_pred)
+print(f'Acurácia: {accuracy * 100:.2f}%')
+```
